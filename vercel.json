@@ -1,9 +1,1 @@
-﻿{
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
-    }
-  ]
-}
+{"framework":"nextjs","nodeVersion":"20.x"}
