@@ -1,0 +1,241 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sky: #2E86C1;
+  --sky-dark: #1a5276;
+  --grass: #2E7D32;
+  --grass-dark: #1b5e20;
+  --win-gray: #c0c0c0;
+  --win-dark: #808080;
+  --win-light: #dfdfdf;
+  --win-blue: #000080;
+  --win-white: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: linear-gradient(to bottom, var(--sky) 0%, var(--sky-dark) 50%, var(--grass-dark) 50%, var(--grass) 100%);
+  background-attachment: fixed;
+}
+
+/* Win98 Window Chrome */
+.win-window {
+  background: var(--win-gray);
+  border: 2px solid;
+  border-color: var(--win-white) var(--win-dark) var(--win-dark) var(--win-white);
+  box-shadow: 1px 1px 0 0 #000;
+}
+
+.win-titlebar {
+  background: linear-gradient(90deg, var(--win-blue), #1084d0);
+  color: white;
+  padding: 3px 4px;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.win-titlebar-btn {
+  background: var(--win-gray);
+  border: 2px solid;
+  border-color: var(--win-white) var(--win-dark) var(--win-dark) var(--win-white);
+  width: 16px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.win-titlebar-btn:active {
+  border-color: var(--win-dark) var(--win-white) var(--win-white) var(--win-dark);
+}
+
+.win-body {
+  padding: 8px;
+}
+
+/* Win98 Button */
+.win-btn {
+  background: var(--win-gray);
+  border: 2px solid;
+  border-color: var(--win-white) var(--win-dark) var(--win-dark) var(--win-white);
+  padding: 4px 16px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.win-btn:active {
+  border-color: var(--win-dark) var(--win-white) var(--win-white) var(--win-dark);
+}
+
+/* Win98 Input */
+.win-input {
+  border: 2px solid;
+  border-color: var(--win-dark) var(--win-white) var(--win-white) var(--win-dark);
+  padding: 3px 4px;
+  font-size: 12px;
+  font-family: inherit;
+  background: white;
+  outline: none;
+}
+.win-input:focus {
+  outline: 1px dotted var(--win-blue);
+}
+
+/* Folder icon hover */
+.folder-icon {
+  transition: transform 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
+}
+.folder-icon:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(255,215,0,0.6));
+}
+
+/* CRT Monitor Glow */
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.98; }
+}
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.crt-screen {
+  position: relative;
+  overflow: hidden;
+  animation: crt-flicker 4s infinite;
+}
+.crt-screen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+}
+
+/* LED Clock Glow */
+@keyframes led-pulse {
+  0%, 100% { text-shadow: 0 0 8px #00ff00, 0 0 16px #00ff00; }
+  50% { text-shadow: 0 0 4px #00ff00, 0 0 8px #00ff00; }
+}
+.led-clock {
+  font-family: 'Courier New', monospace;
+  color: #00ff00;
+  animation: led-pulse 2s infinite;
+}
+
+/* Chat bubble float */
+@keyframes float-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.chat-bubble-float {
+  animation: float-bob 3s ease-in-out infinite;
+}
+
+/* Start button glow */
+.start-btn:hover {
+  filter: brightness(1.1);
+}
+
+/* Custom scrollbar (Win98 style) */
+::-webkit-scrollbar { width: 16px; }
+::-webkit-scrollbar-track { background: var(--win-gray); border: 1px solid var(--win-dark); }
+::-webkit-scrollbar-thumb {
+  background: var(--win-gray);
+  border: 2px solid;
+  border-color: var(--win-white) var(--win-dark) var(--win-dark) var(--win-white);
+}
+
+/* Overlay for modals */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* App row hover */
+.app-row {
+  transition: background-color 0.15s ease;
+  cursor: pointer;
+}
+.app-row:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+/* Sidebar panel */
+.sidebar-panel {
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+/* Taskbar */
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: var(--win-gray);
+  border-top: 2px solid var(--win-white);
+  display: flex;
+  align-items: center;
+  z-index: 900;
+  padding: 0 4px;
+}
+
+/* Badge styles */
+.badge-coming-soon {
+  background: #f59e0b;
+  color: #000;
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+.badge-private {
+  background: #6b7280;
+  color: #fff;
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: bold;
+}
