@@ -3,11 +3,11 @@
 interface App {
   id: string
   name: string
-  sub_label: string
+  sub_label: string | null
   icon_glyph: string
   icon_color: string
   link_url: string | null
-  link_status: 'live' | 'coming_soon' | 'private'
+  link_status: string
   order_index: number
 }
 
@@ -36,9 +36,9 @@ export default function AppsSidebar({ apps, onAppClick }: Props) {
                 {app.link_status === 'coming_soon' && <span className="badge-coming-soon">SOON</span>}
                 {app.link_status === 'private' && <span className="badge-private">PRIVATE</span>}
               </div>
-              <div className="text-white/60 text-[10px] truncate">{app.sub_label}</div>
+              {app.sub_label && <div className="text-white/60 text-[10px] truncate">{app.sub_label}</div>}
             </div>
-            {app.link_status === 'live' && app.link_url && app.id !== 'skills' && (
+            {app.link_status === 'live' && app.link_url && app.id !== 'resume' && (
               <span className="text-white/40 text-[10px]">↗</span>
             )}
           </button>

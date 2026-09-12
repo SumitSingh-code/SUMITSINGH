@@ -3,64 +3,70 @@ import DesktopShell from '@/components/DesktopShell'
 
 export const dynamic = 'force-dynamic'
 
+// Fallback data (used when Supabase is not configured)
+const FALLBACK = {
+  folders: [
+    { id: 'vetanx', name: 'Vetanx', tagline: 'A multi-tenant cloud payroll & HR SaaS, built solo, live at vetanx.site', content: { what_it_is: 'Vetanx is a cloud-based payroll and HR platform aimed at Indian small and growing businesses. It handles salary calculation, HR management, and subscription billing — built as a proper multi-tenant SaaS.', tech_stack: ['Express.js', 'Supabase Postgres + RLS', 'Razorpay', 'Vanilla JS PWA', 'Vercel'], origin_story: 'Evolved from an earlier desktop app called SalaryHub (Electron + SQLite). Migrated the entire product from a desktop tool into a cloud multi-tenant SaaS.', key_work: ['Owner-vs-manager RBAC permission model with RLS security', 'Recurring salary-calculation engine with 30-day method', 'SEO/AEO/GEO optimization', 'Mobile responsiveness pass'], why_it_matters: 'This is a real, live, paying-customer-facing product designed, built, and operated entirely solo — not a class project or a clone.' }, order_index: 1 },
+    { id: 'unigram', name: 'Unigram', tagline: 'A campus social + utility app for CRSU students. Launching Vijayadashami, 20 Oct 2026.', content: { what_it_is: 'Mobile-first PWA built specifically for CRSU. Campus Feed (Twitter/Yik-Yak style) with utility tools: PYQs, notices, timetable, lost & found, notes sharing.', tech_stack: ['Express.js', 'Supabase Auth + Realtime + Storage', 'Vanilla JS PWA', 'Vercel'], feature_set: ['Campus Feed — posts, images, upvote/downvote, comments', 'Anonymous Feed — separate tab, admin still sees identity', 'DMs and real-time notifications', 'Full Admin Panel: signup approval, moderation, content management'], design_direction: 'College ID-card / noticeboard-inspired — department badges, warm off-white, navy text, marigold and leaf-green accents, Space Grotesk + Inter typography.', why_it_matters: 'No official mandate — it has to succeed on organic adoption, which is why it leans heavily on daily-engagement mechanics.' }, order_index: 2 },
+    { id: 'medikiosk', name: 'MediKiosk', tagline: 'AI-powered patient case-taking for AYUSH OPDs — SIH winning project.', content: { what_it_is: 'Platform for SIH Problem Statement SIH26047 — streamlines patient case-taking in AYUSH OPDs using AI.', story: 'Built with team Code Catalysts at CRSU Internal SIH 2026 — an event Sumit organized himself and also competed in. Won 1st position.', status: 'Ongoing build — not yet publicly live.' }, order_index: 3 },
+    { id: 'ashoka-hotel', name: 'Ashoka Hotel', tagline: 'Long-standing client — website, digital ordering, games, and billing.', content: { sub_items: [{ name: 'Website', description: 'Black-and-gold luxury theme, local SEO, mobile-responsive.' }, { name: 'Digital Menu', description: 'Cart functionality with WhatsApp ordering.' }, { name: 'Games Hub', description: 'Interactive React-based games including memory game.' }, { name: 'Billing Software', description: 'Standalone billing system for day-to-day operations.' }], related_client_work: ['Full website for Holy Heart Sr. Sec. School, Jind', 'Website for a truck body company'], why_it_matters: 'Real long-term client relationship — multiple distinct pieces of software built and maintained over time.' }, order_index: 4 },
+    { id: 'hackathon-partition-tool', name: 'Hackathon Partition Tool', tagline: 'A web tool for organizing hackathon teams and problem statements.', content: { what_it_is: 'Built out of experience organizing CRSU Internal SIH 2026 — helps hackathon organizers allocate teams to problem statements efficiently.', status: 'Not yet publicly live.' }, order_index: 5 },
+    { id: 'achievements', name: 'Achievements', tagline: 'A running record of wins and recognitions.', content: { note: 'Awards, hackathon wins, and notable recognitions.', sub_items: [{ name: 'SIH Hackathon 2026', description: 'Organized + Competed + Won 1st place with team Code Catalysts. Three roles at once: Organizer, Participant, Winner.' }, { name: 'Dear Romeo Prompt Challenge 2026', description: '1st Place in international AI prompt-engineering competition. Built a matchmaking algorithm.' }] }, order_index: 6 },
+    { id: 'leadership-roles', name: 'Leadership & Roles', tagline: 'Organizing, mentoring, and running technical events at CRSU.', content: { sub_items: [{ name: 'Organizer, Internal SIH 2026', description: 'Full ownership of event planning and execution.' }, { name: 'National-Level Hackathon Organizer', description: 'October 2026.' }, { name: 'Mentor', description: 'Guiding students on organizing hackathons and technical events.' }, { name: 'Go-to Organizer, CS Dept', description: 'Repeatedly takes on workshops, sections, hackathons.' }] }, order_index: 7 },
+    { id: 'internships', name: 'Internships', tagline: 'Early professional experience alongside solo founder work.', content: { entries: [{ title: 'Web Development Intern, MG Education', description: '46 days, June–July 2026.' }, { title: 'Intern, Skill India', description: '' }] }, order_index: 8 },
+  ],
+  apps: [
+    { id: 'vetanx', name: 'Vetanx', sub_label: null, icon_glyph: '₹', icon_color: '#5B4FE0', link_url: 'https://vetanx.site/', link_status: 'live', order_index: 1 },
+    { id: 'unigram', name: 'Unigram', sub_label: null, icon_glyph: '🎓', icon_color: '#111827', link_url: 'https://campusbuddy-ochre.vercel.app/', link_status: 'live', order_index: 2 },
+    { id: 'medikiosk', name: 'MediKiosk', sub_label: null, icon_glyph: '🩺', icon_color: '#0EA5A6', link_url: null, link_status: 'coming_soon', order_index: 3 },
+    { id: 'ashoka-website', name: 'Ashoka Hotel', sub_label: 'Website / Menu / Games', icon_glyph: '🏨', icon_color: '#C0392B', link_url: 'https://ashokahoteljind.com/', link_status: 'live', order_index: 4 },
+    { id: 'ashoka-billing', name: 'Ashoka Hotel', sub_label: 'Billing Software', icon_glyph: '🧾', icon_color: '#0EA5E9', link_url: null, link_status: 'private', order_index: 5 },
+    { id: 'hackathon-tool', name: 'Hackathon Partition Tool', sub_label: null, icon_glyph: '🧩', icon_color: '#8E44AD', link_url: null, link_status: 'coming_soon', order_index: 6 },
+    { id: 'control-panel', name: 'Control Panel', sub_label: 'Skills', icon_glyph: '⚙️', icon_color: '#9CA3AF', link_url: null, link_status: 'internal', order_index: 7 },
+    { id: 'resume', name: 'Resume.pdf', sub_label: null, icon_glyph: '📄', icon_color: '#DC2626', link_url: '/resume.pdf', link_status: 'live', order_index: 8 },
+  ],
+  skills: ['HTML', 'CSS', 'Tailwind CSS', 'JavaScript', 'React', 'Next.js', 'Node.js', 'Express.js', 'Python', 'SQL / PostgreSQL', 'Supabase', 'Razorpay', 'Git & GitHub', 'Vercel', 'AI-assisted development workflows'],
+  aboutMe: "I'm Sumit Singh, a solo developer and founder from Jind, Haryana, currently in my 3rd year of BCA at Chaudhary Ranbir Singh University (CRSU). I build full products end-to-end — from backend architecture to frontend polish — and run Vetanx, a live multi-tenant payroll & HR SaaS for Indian small businesses, as my main venture.\n\nAlongside that, I build Unigram, a social + utility app for my own university campus, take on client projects, and organize technical events at CRSU — most notably running the university's Internal Smart India Hackathon 2026 as organizer, participant, and 1st-place winner.\n\nContact: sumirajput870@gmail.com",
+  portraitUrl: '/portrait.jpg',
+  faq: [
+    { question: 'Who is Sumit?', answer: 'Solo developer and founder from Jind, Haryana; 3rd year BCA at CRSU.' },
+    { question: 'What is his flagship project?', answer: 'Vetanx — a live, multi-tenant payroll & HR SaaS for Indian small businesses.' },
+    { question: 'What is his stack?', answer: 'Express.js, Supabase (Postgres + RLS + Auth + Realtime + Storage), Razorpay, Vercel, vanilla JS/HTML/CSS, React/Next.js for client projects.' },
+    { question: 'How does he work?', answer: 'He uses an AI coding assistant (Antigravity) for implementation and Claude for architecture, debugging, and strategy.' },
+    { question: 'What is his other big win?', answer: '1st Place, Dear Romeo Prompt Challenge 2026 — an international AI prompt-engineering competition.' },
+  ],
+}
+
 async function getData() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  // If Supabase not configured, return fallback data
-  if (!url || !key) {
+  if (!url || !key) return FALLBACK
+
+  try {
+    const supabase = createClient(url, key)
+
+    const [foldersRes, appsRes, skillsRes, settingsRes, faqRes] = await Promise.all([
+      supabase.from('folders').select('*').order('order_index'),
+      supabase.from('apps').select('*').order('order_index'),
+      supabase.from('skills').select('*').order('order_index'),
+      supabase.from('site_settings').select('*'),
+      supabase.from('faq').select('*'),
+    ])
+
+    const settings: Record<string, string> = {}
+    settingsRes.data?.forEach((s: { key: string; value: string }) => { settings[s.key] = s.value })
+
     return {
-      folders: [
-        { id: 'vetanx', name: 'Vetanx', tagline: 'Multi-tenant Payroll & HR SaaS', content: { what_it_is: 'Live multi-tenant payroll & HR SaaS built from scratch.', tech_stack: ['Express.js', 'Supabase Postgres + RLS', 'Razorpay', 'Vanilla JS PWA', 'Vercel'], key_work: ['RBAC system', 'Salary calculation engine', 'SEO/AEO/GEO optimization', 'Mobile-first PWA'], why_it_matters: 'Started as SalaryHub, evolved into full cloud SaaS. Real users, real money, real payroll runs.', sub_items: [] }, order_index: 0 },
-        { id: 'unigram', name: 'Unigram', tagline: 'Campus Social Platform', content: { what_it_is: 'Campus app for CRSU students — social feed, anonymous confessions, DMs, and admin tools. Live at unigramjind.site.', tech_stack: ['Express.js', 'Supabase Auth + Realtime + Storage', 'PWA', 'Vercel'], key_work: ['Campus Feed with real-time updates', 'Anonymous Feed', 'Direct Messaging', 'Admin Panel'], why_it_matters: 'Built for the college community with college ID-card aesthetic.', sub_items: [] }, order_index: 1 },
-        { id: 'medikiosk', name: 'MediKiosk', tagline: 'AYUSH OPD AI Case-Taking', content: { what_it_is: 'AI-powered case-taking system for AYUSH OPD. SIH problem statement SIH26047.', tech_stack: ['React', 'Node.js', 'AI/ML', 'Supabase'], key_work: ['Built with team Code Catalysts', 'Won 1st at CRSU Internal SIH 2026'], why_it_matters: 'Won the Internal Smart India Hackathon at CRSU.', sub_items: [] }, order_index: 2 },
-        { id: 'ashoka', name: 'Ashoka Hotel', tagline: 'Complete Digital Presence', content: { what_it_is: 'Full digital transformation for a local hotel.', tech_stack: ['HTML/CSS/JS', 'React', 'Node.js', 'Local SEO'], key_work: ['Website', 'Digital menu with WhatsApp cart', 'React memory game', 'Billing software'], why_it_matters: 'End-to-end client work.', sub_items: [{ name: 'Website', desc: 'Black-gold theme, local SEO' }, { name: 'Digital Menu', desc: 'WhatsApp cart' }, { name: 'Games Hub', desc: 'React memory game' }, { name: 'Billing Software', desc: 'Internal system' }] }, order_index: 3 },
-        { id: 'hackathon-tool', name: 'Hackathon Partition Tool', tagline: 'Team Allocation & Organization', content: { what_it_is: 'Web tool for organizing hackathon teams and problem statements.', tech_stack: ['React', 'Node.js', 'Supabase'], key_work: ['Automated team allocation', 'Problem statement distribution'], why_it_matters: 'Born from organizing 100+ teams at CRSU.', sub_items: [] }, order_index: 4 },
-        { id: 'achievements', name: 'Achievements', tagline: 'Wins & Recognitions', content: { what_it_is: 'Awards, hackathon wins, and notable recognitions.', tech_stack: [], key_work: [], why_it_matters: '', sub_items: [{ name: 'SIH Hackathon 2026', desc: 'Organized + Won 1st place with Code Catalysts' }, { name: 'Dear Romeo Prompt Challenge 2026', desc: '1st place international AI prompt competition' }] }, order_index: 5 },
-        { id: 'leadership', name: 'Leadership & Roles', tagline: 'Organizing & Mentoring', content: { what_it_is: 'Leadership positions and community contributions.', tech_stack: [], key_work: [], why_it_matters: '', sub_items: [{ name: 'Internal SIH 2026 Organizer', desc: 'Organized entire internal SIH at CRSU' }, { name: 'National Hackathon Organizer', desc: 'Organizing national-level hackathon Oct 2026' }, { name: 'CS Dept Go-to Organizer', desc: 'The person CS dept calls for any tech event' }, { name: 'Mentor', desc: 'Mentoring juniors in web dev and hackathon prep' }] }, order_index: 6 },
-        { id: 'internships', name: 'Internships', tagline: 'Professional Experience', content: { what_it_is: 'Professional internship experience.', tech_stack: [], key_work: [], why_it_matters: '', sub_items: [{ name: 'Web Dev Intern - MG Education', desc: '46 days (Jun-Jul 2026)' }, { name: 'Skill India Intern', desc: 'Skill India programme' }] }, order_index: 7 },
-      ],
-      apps: [
-        { id: 'vetanx', name: 'Vetanx', sub_label: 'Payroll SaaS', icon_glyph: '💼', icon_color: '#3b82f6', link_url: 'https://vetanx.site', link_status: 'live', order_index: 0 },
-        { id: 'unigram', name: 'Unigram', sub_label: 'Campus App', icon_glyph: '💬', icon_color: '#8b5cf6', link_url: 'https://unigramjind.site', link_status: 'live', order_index: 1 },
-        { id: 'medikiosk', name: 'MediKiosk', sub_label: 'AI Healthcare', icon_glyph: '🏥', icon_color: '#10b981', link_url: null, link_status: 'coming_soon', order_index: 2 },
-        { id: 'ashoka-website', name: 'Ashoka Hotel', sub_label: 'Website / Menu / Games', icon_glyph: '🏨', icon_color: '#f59e0b', link_url: 'https://www.ashokahoteljind.com/', link_status: 'live', order_index: 3 },
-        { id: 'ashoka-billing', name: 'Ashoka Hotel', sub_label: 'Billing Software', icon_glyph: '🧾', icon_color: '#f97316', link_url: null, link_status: 'private', order_index: 4 },
-        { id: 'hackathon-tool', name: 'Hackathon Tool', sub_label: 'Team Allocation', icon_glyph: '🎯', icon_color: '#ef4444', link_url: null, link_status: 'coming_soon', order_index: 5 },
-        { id: 'skills', name: 'Control Panel', sub_label: 'Skills', icon_glyph: '⚙️', icon_color: '#6b7280', link_url: null, link_status: 'live', order_index: 6 },
-        { id: 'resume', name: 'Resume.pdf', sub_label: 'Download CV', icon_glyph: '📄', icon_color: '#dc2626', link_url: '/resume.pdf', link_status: 'live', order_index: 7 },
-      ],
-      skills: ['HTML', 'CSS', 'Tailwind CSS', 'JavaScript', 'React', 'Next.js', 'Node.js', 'Express.js', 'Python', 'SQL/PostgreSQL', 'Supabase', 'Razorpay', 'Git & GitHub', 'Vercel', 'AI-assisted Development'],
-      aboutMe: 'Sumit Singh — solo developer & founder, Jind, Haryana. 3rd year BCA, CRSU. Builds full products end-to-end; runs Vetanx (live multi-tenant payroll & HR SaaS) as main venture, alongside Unigram (campus app), client work, and organizing technical events at CRSU — including winning CRSU\'s Internal Smart India Hackathon 2026. Contact: sumirajput870@gmail.com',
-      portraitUrl: '/portrait.jpg',
-      faq: [
-        { question: 'Who is Sumit?', answer: 'Sumit Singh is a solo developer and founder from Jind, Haryana. 3rd year BCA student at CRSU.' },
-        { question: 'What is your flagship project?', answer: 'Vetanx — a live multi-tenant payroll & HR SaaS.' },
-        { question: 'What is your tech stack?', answer: 'Next.js, Express.js, Supabase, Tailwind CSS, Vercel, and AI-assisted development.' },
-      ],
+      folders: foldersRes.data?.length ? foldersRes.data : FALLBACK.folders,
+      apps: appsRes.data?.length ? appsRes.data : FALLBACK.apps,
+      skills: skillsRes.data?.length ? skillsRes.data.map((s: { name: string }) => s.name) : FALLBACK.skills,
+      aboutMe: settings['about_me'] || FALLBACK.aboutMe,
+      portraitUrl: settings['portrait_url'] || '/portrait.jpg',
+      faq: faqRes.data?.length ? faqRes.data : FALLBACK.faq,
     }
-  }
-
-  const supabase = createClient(url, key)
-
-  const [foldersRes, appsRes, skillsRes, settingsRes, faqRes] = await Promise.all([
-    supabase.from('folders').select('*').order('order_index'),
-    supabase.from('apps').select('*').order('order_index'),
-    supabase.from('skills').select('*').order('order_index'),
-    supabase.from('site_settings').select('*'),
-    supabase.from('faq').select('*'),
-  ])
-
-  const settings: Record<string, string> = {}
-  settingsRes.data?.forEach((s: { key: string; value: string }) => { settings[s.key] = s.value })
-
-  return {
-    folders: foldersRes.data || [],
-    apps: appsRes.data || [],
-    skills: (skillsRes.data || []).map((s: { name: string }) => s.name),
-    aboutMe: settings['about_me'] || '',
-    portraitUrl: settings['portrait_url'] || '/portrait.jpg',
-    faq: faqRes.data || [],
+  } catch {
+    return FALLBACK
   }
 }
 

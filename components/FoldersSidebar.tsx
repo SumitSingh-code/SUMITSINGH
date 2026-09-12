@@ -4,13 +4,7 @@ interface Folder {
   id: string
   name: string
   tagline: string
-  content: {
-    what_it_is: string
-    tech_stack: string[]
-    key_work: string[]
-    why_it_matters: string
-    sub_items: { name: string; desc: string }[]
-  }
+  content: Record<string, unknown>
   order_index: number
 }
 
@@ -23,9 +17,12 @@ const FOLDER_ICONS: Record<string, string> = {
   vetanx: '💼',
   unigram: '💬',
   medikiosk: '🏥',
+  'ashoka-hotel': '🏨',
   ashoka: '🏨',
+  'hackathon-partition-tool': '🎯',
   'hackathon-tool': '🎯',
   achievements: '🏆',
+  'leadership-roles': '👑',
   leadership: '👑',
   internships: '📋',
 }
@@ -46,7 +43,9 @@ export default function FoldersSidebar({ folders, onOpen }: Props) {
             </span>
             <div className="min-w-0">
               <div className="text-white text-xs font-bold truncate">{folder.name}</div>
-              <div className="text-white/60 text-[10px] truncate">{folder.tagline}</div>
+              <div className="text-white/60 text-[10px] truncate leading-tight" style={{ maxWidth: '120px' }}>
+                {folder.tagline.length > 40 ? folder.tagline.slice(0, 40) + '…' : folder.tagline}
+              </div>
             </div>
           </button>
         ))}

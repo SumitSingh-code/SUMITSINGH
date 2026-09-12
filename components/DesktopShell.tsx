@@ -14,24 +14,18 @@ interface Folder {
   id: string
   name: string
   tagline: string
-  content: {
-    what_it_is: string
-    tech_stack: string[]
-    key_work: string[]
-    why_it_matters: string
-    sub_items: { name: string; desc: string }[]
-  }
+  content: Record<string, unknown>
   order_index: number
 }
 
 interface App {
   id: string
   name: string
-  sub_label: string
+  sub_label: string | null
   icon_glyph: string
   icon_color: string
   link_url: string | null
-  link_status: 'live' | 'coming_soon' | 'private'
+  link_status: string
   order_index: number
 }
 
@@ -53,22 +47,27 @@ export default function DesktopShell({ folders, apps, skills, aboutMe, portraitU
   const [statusModal, setStatusModal] = useState<{ title: string; message: string } | null>(null)
 
   const handleAppClick = (app: App) => {
-    if (app.id === 'skills') {
+    // Control Panel / Skills — open in-page modal
+    if (app.id === 'control-panel' || app.id === 'skills' || app.link_status === 'internal') {
       setSkillsOpen(true)
       return
     }
+    // Resume — open/download
     if (app.id === 'resume') {
       window.open(app.link_url || '/resume.pdf', '_blank')
       return
     }
+    // Live links — open in new tab
     if (app.link_status === 'live' && app.link_url) {
       window.open(app.link_url, '_blank')
       return
     }
+    // Coming soon
     if (app.link_status === 'coming_soon') {
       setStatusModal({ title: `${app.name} — Coming Soon`, message: 'This project is currently under development. Check back soon!' })
       return
     }
+    // Private
     if (app.link_status === 'private') {
       setStatusModal({ title: `${app.name} — Private`, message: 'This is a private client system and is not publicly hosted.' })
       return
